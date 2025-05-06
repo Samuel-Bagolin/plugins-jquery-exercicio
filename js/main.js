@@ -1,83 +1,49 @@
-$(document).ready(function(){
-    // Inicializa o Slick Carousel
-    $("#carousel-imagens").slick({
-        autoplay: true,  // Ativa autoplay
-        arrows: false    // Esconde as setas de navegação
+$(document).ready(function () {
+    $('#carousel-imagens').slick({
+        autoplay: true,
+        arrows: false
     });
+});
 
-    // Aplica máscaras aos campos
-    $("#telefone").mask("(00) 00000-0000");
-    $("#cpf").mask("000.000.000-00", {reverse: true});
-    $("#cep").mask("00000-000");
+$('#telefone').mask('(00) 00000-0000', {
+    placeholder: '(DDD) 12345-6789'
+});
 
-    // Inicializa a validação do formulário
-    $("#contact-form").validate({
-        // Define as regras de validação
-        rules: {
-            nome: { // Corrigido para 'nome' (era 'name' no código anterior)
-                required: true,
-                minlength: 3
-            },
-            email: {
-                required: true,
-                email: true
-            },
-            telefone: { // Corrigido para 'telefone' (era 'phone')
-                required: true
-                // A validação do formato da máscara já ajuda aqui
-            },
-            cpf: {
-                required: true // Tornando CPF obrigatório como no exemplo do usuário
-                // Uma validação de CPF mais robusta exigiria uma função customizada
-            },
-            endereco: { // Nova regra
-                required: true
-            },
-            cep: { // Nova regra
-                required: true
-            }
-            // Removido 'message' pois não existe mais no formulário atualizado
+$('#cpf').mask('000.000.000-00', {
+    placeholder: '123.456.789-00'
+});
+
+$('#cep').mask('00000-000', {
+    placeholder: '01234-567'
+});
+
+$('form').validate({
+    rules: {
+        nome: {
+            required: true
         },
-        // Define as mensagens de erro (usará messages_pt_BR.min.js por padrão)
-        messages: {
-            nome: {
-                required: "Por favor, digite seu nome completo",
-                minlength: "Seu nome deve ter pelo menos 3 caracteres"
-            },
-            email: {
-                required: "Por favor, digite seu e-mail",
-                email: "Por favor, digite um endereço de e-mail válido"
-            },
-            telefone: {
-                required: "Por favor, digite seu telefone"
-            },
-            cpf: {
-                required: "Por favor, digite seu CPF"
-            },
-            endereco: {
-                required: "Por favor, digite seu endereço completo"
-            },
-            cep: {
-                required: "Por favor, digite seu CEP"
-            }
+        email: {
+            required: true,
+            email: true
         },
-        // Função para lidar com o envio do formulário após a validação
-        submitHandler: function(form) {
-            alert("Formulário enviado com sucesso! Compra (simulada) finalizada.");
-            // Aqui você poderia adicionar código para enviar os dados do formulário
-            // via AJAX, por exemplo.
-            // form.submit(); // Descomente para permitir o envio padrão do formulário
-            form.reset(); // Limpa o formulário após o envio (opcional)
+        telefone: {
+            required: true
         },
-        // Adiciona tratamento para destacar campos inválidos (opcional, mas boa prática)
-        errorPlacement: function(error, element) {
-            error.insertAfter(element);
+        endereco: {
+            required: true
         },
-        highlight: function(element) {
-            $(element).closest(".form-group, .form-campo").addClass("error");
+        cep: {
+            required: true
         },
-        unhighlight: function(element) {
-            $(element).closest(".form-group, .form-campo").removeClass("error");
+        cpf: {
+            required: true
         }
-    });
+    },
+    submitHandler: function (form) {
+        alert("Sua requisição foi enviada para análise. Em breve, um de nossos consultores entrará em contato!");
+        form.reset();
+    },
+    invalidHandler: function () {
+        alert("Preencha todos os campos corretamente para continuar.");
+    }
 });
